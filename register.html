@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
-      // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -19,7 +18,6 @@
         messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
         appId: "YOUR_APP_ID"
       };
-      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
     </script>
@@ -47,11 +45,13 @@
     <script>
       document.getElementById('register-form').addEventListener('submit', function(event) {
         event.preventDefault();
+        console.log('Form submitted'); // Debugging statement
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        console.log('Email:', email, 'Password:', password); // Debugging statement
         auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
-            // Registered successfully
-            console.log('User registered:', userCredential.user);
+            console.log('User registered:', userCredential.user); // Debugging statement
+            // Optionally redirect or give feedback to the user
         }).catch((error) => {
             console.error('Error registering user:', error);
         });

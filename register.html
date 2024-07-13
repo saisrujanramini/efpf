@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+    </script>
 </head>
 <body>
     <header>
@@ -16,7 +34,7 @@
         </nav>
     </header>
     <main>
-        <form action="auth.php?action=register" method="POST">
+        <form id="register-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="email">Email:</label>
@@ -26,5 +44,18 @@
             <button type="submit">Register</button>
         </form>
     </main>
+    <script>
+      document.getElementById('register-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+            // Registered successfully
+            console.log('User registered:', userCredential.user);
+        }).catch((error) => {
+            console.error('Error registering user:', error);
+        });
+      });
+    </script>
 </body>
 </html>
